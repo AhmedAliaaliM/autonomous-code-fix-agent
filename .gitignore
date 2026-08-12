@@ -11,3 +11,4 @@ sandbox/
 
 # Raw benchmark outputs (keep the summarized results, not every run's full logs)
 data/results/raw/
+__pycache__/

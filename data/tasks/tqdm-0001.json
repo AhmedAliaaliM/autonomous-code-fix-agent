@@ -1,0 +1,15 @@
+{
+  "task_id": "tqdm-0001",
+  "repo_url": "https://github.com/tqdm/tqdm.git",
+  "base_commit": "6ab24dcc5df910044f1f6e0685f95dbf9cd424f3",
+  "issue_title": "OverflowError when total=inf is passed to format_meter",
+  "issue_body": "Passing total=float('inf') to tqdm's format_meter crashes with OverflowError instead of behaving like an unknown total. Expected: total=inf should be treated the same as total=None (unknown total), per the discussion in issue #651.",
+  "fix_commit": "ef15578141f2df10f9c169ec619d8a5217f6a37f",
+  "gold_patch_url": "https://github.com/tqdm/tqdm/commit/ef15578141f2df10f9c169ec619d8a5217f6a37f",
+  "test_command": "python -m pytest tests/tests_tqdm.py -k test_format_meter -x",
+  "fail_to_pass_tests": [
+    "tests/tests_tqdm.py::test_format_meter"
+  ],
+  "pass_to_pass_tests": [],
+  "difficulty_notes": "Easy — single function (format_meter in tqdm/std.py), fix is a 4-line conditional, test is one added assertion inside an existing test function. Good sanity-check task for the agent's basic loop."
+}

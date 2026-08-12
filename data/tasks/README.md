@@ -34,10 +34,28 @@ multi-file or logic-heavy fixes (the ones that actually differentiate a
 good agent from a mediocre one). Note this in `difficulty_notes` — it
 feeds directly into the failure-mode breakdown in Week 4.
 
+## Important: how "fail_to_pass" actually gets verified
+
+Checking out `base_commit` alone and running `fail_to_pass_tests` is **not**
+a valid check -- the test itself usually doesn't exist yet at `base_commit`
+either (it was added BY the fix), so it will often just pass trivially or
+error out as missing. Confirmed on `tqdm-0001`: running the target test at
+`base_commit` gave a false pass because the test file hadn't been updated.
+
+The correct check (what `scripts/verify_task.py` actually does):
+1. Checkout `base_commit` (buggy source, old test file)
+2. Pull forward *only the test file changes* from `fix_commit` (the "test
+   patch") -- now the new test exists, but the source bug is still there
+3. Run `fail_to_pass_tests` -> must FAIL
+4. Checkout `fix_commit` in full -> run same tests -> must PASS
+
+This is the same test-patch/gold-patch split SWE-bench itself uses, and
+it's why every task record needs `fix_commit`, not just `base_commit`.
+
 ## Checklist per task
 
-- [ ] `base_commit` checked out and confirmed to FAIL `fail_to_pass_tests`
-- [ ] Fix commit checked out and confirmed to PASS the same tests
+- [ ] `fix_commit` recorded, and it touches at least one file under `tests/`
+- [ ] `scripts/verify_task.py data/tasks/<task_id>.json` passes cleanly
 - [ ] `issue_body` copied verbatim from GitHub (this is literally what the
       agent reads — don't clean it up or add hints)
 - [ ] `test_command` runs standalone without needing secrets/external services

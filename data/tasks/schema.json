@@ -9,6 +9,7 @@
     "base_commit",
     "issue_title",
     "issue_body",
+    "fix_commit",
     "gold_patch_url",
     "test_command",
     "fail_to_pass_tests"
@@ -30,6 +31,10 @@
     "issue_body": {
       "type": "string",
       "description": "Full issue text as the agent will see it"
+    },
+    "fix_commit": {
+      "type": "string",
+      "description": "Commit SHA of the real merged fix. Used to derive the 'test patch' -- the diff to test files only -- which gets applied on top of base_commit before the agent starts. This is what makes fail_to_pass_tests actually fail at the start: the test exists, the source fix doesn't yet."
     },
     "gold_patch_url": {
       "type": "string",
