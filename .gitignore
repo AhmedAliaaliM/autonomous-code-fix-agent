@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+*.log
+
+# Cloned target repos + sandbox scratch space (regenerated per run, not versioned)
+data/repos/
+sandbox/
+
+# Raw benchmark outputs (keep the summarized results, not every run's full logs)
+data/results/raw/

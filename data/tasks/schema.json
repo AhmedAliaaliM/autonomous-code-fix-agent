@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Benchmark task record",
+  "description": "One resolved GitHub issue used to evaluate the agent.",
+  "type": "object",
+  "required": [
+    "task_id",
+    "repo_url",
+    "base_commit",
+    "issue_title",
+    "issue_body",
+    "gold_patch_url",
+    "test_command",
+    "fail_to_pass_tests"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "description": "Short unique id, e.g. 'httpie-1234'"
+    },
+    "repo_url": {
+      "type": "string",
+      "description": "GitHub URL of the target repo"
+    },
+    "base_commit": {
+      "type": "string",
+      "description": "Commit SHA immediately BEFORE the real fix was merged — this is the state the agent starts from"
+    },
+    "issue_title": { "type": "string" },
+    "issue_body": {
+      "type": "string",
+      "description": "Full issue text as the agent will see it"
+    },
+    "gold_patch_url": {
+      "type": "string",
+      "description": "Link to the actual merged PR/commit that fixed it — used for your own reference only, never shown to the agent"
+    },
+    "test_command": {
+      "type": "string",
+      "description": "Shell command run inside the sandbox to check the fix, e.g. 'pytest tests/test_parser.py -k test_edge_case'"
+    },
+    "fail_to_pass_tests": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Test names that FAIL on base_commit and must PASS after a correct fix. This is what actually verifies resolution."
+    },
+    "pass_to_pass_tests": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional: tests that already pass on base_commit and must keep passing (catches regressions)"
+    },
+    "difficulty_notes": {
+      "type": "string",
+      "description": "Your own note on why this task is easy/medium/hard — useful later for failure-mode analysis"
+    }
+  }
+}

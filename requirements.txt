@@ -1,0 +1,14 @@
+# LLM client
+anthropic>=0.40.0
+
+# Repo / diff handling
+gitpython>=3.1.43
+unidiff>=0.7.5
+
+# Utilities
+python-dotenv>=1.0.1
+pydantic>=2.9.0
+rich>=13.9.0
+
+# Testing (for the agent's own code, not the target repos)
+pytest>=8.3.0
