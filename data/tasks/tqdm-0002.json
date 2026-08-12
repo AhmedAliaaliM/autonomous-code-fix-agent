@@ -1,0 +1,15 @@
+{
+  "task_id": "tqdm-0002",
+  "repo_url": "https://github.com/tqdm/tqdm.git",
+  "base_commit": "3757d0d13ec86d73a838b55fc35ef89bc42a3461",
+  "issue_title": "tqdm.write crashes when sys.stdout is None",
+  "issue_body": "Calling tqdm.write() crashes with AttributeError when sys.stdout has been set to None (e.g. in some GUI or frozen/packaged app environments where stdout is unavailable). Expected: tqdm.write should silently no-op instead of crashing when no output stream is available.",
+  "fix_commit": "74ff9929dfec128972eb68f9ff27ae40fae6a21c",
+  "gold_patch_url": "https://github.com/tqdm/tqdm/commit/74ff9929dfec128972eb68f9ff27ae40fae6a21c",
+  "test_command": "python -m pytest tests/tests_tqdm.py -k test_write_stdout_none -x",
+  "fail_to_pass_tests": [
+    "tests/tests_tqdm.py::test_write_stdout_none"
+  ],
+  "pass_to_pass_tests": [],
+  "difficulty_notes": "Easy — single guard clause added in two places (write() and external_write_mode()), brand new test function. Good second sanity-check task, slightly different shape than tqdm-0001 (guard clause vs conditional branch)."
+}

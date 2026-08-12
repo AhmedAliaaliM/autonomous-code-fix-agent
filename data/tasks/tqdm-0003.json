@@ -1,0 +1,20 @@
+{
+  "task_id": "tqdm-0003",
+  "repo_url": "https://github.com/tqdm/tqdm.git",
+  "base_commit": "4a7f422734a765d3df89ad7dbfec3ef1baf53b30",
+  "issue_title": "contrib.concurrent uses longest iterable length instead of shortest",
+  "issue_body": "process_map/thread_map in tqdm.contrib.concurrent use max() over the input iterables' lengths to decide the total and chunksize warning threshold. Since map() with multiple iterables stops at the SHORTEST iterable, using max() gives a wrong (too high) total and can trigger the chunksize warning incorrectly. Should use min() over the iterables' lengths instead.",
+  "fix_commit": "0eaee96e4fd5ccf18e5bc2a637aa19a280e54bc3",
+  "gold_patch_url": "https://github.com/tqdm/tqdm/commit/0eaee96e4fd5ccf18e5bc2a637aa19a280e54bc3",
+  "test_command": "python -m pytest tests/tests_concurrent.py -k test_chunksize_warning -x",
+  "fail_to_pass_tests": [
+    "tests/tests_concurrent.py::test_chunksize_warning[iterables2-False]",
+    "tests/tests_concurrent.py::test_chunksize_warning[iterables3-False]"
+  ],
+  "pass_to_pass_tests": [
+    "tests/tests_concurrent.py::test_chunksize_warning[iterables0-False]",
+    "tests/tests_concurrent.py::test_chunksize_warning[iterables1-False]",
+    "tests/tests_concurrent.py::test_chunksize_warning[iterables4-True]"
+  ],
+  "difficulty_notes": "Medium — requires understanding WHY max() is wrong here (map() semantics), not just a null-check. Two functions touched (_executor_map, process_map), parametrized test with new cases added. Good differentiator task."
+}
